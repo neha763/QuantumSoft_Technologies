@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Responsive Admin Dashboard</title>
+    <link rel="stylesheet" href="style1.css" />
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      /* Style for iframe container */
+      #iframe-container {
+        margin: 20px;
+        background: #f4f4f4;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <a href="index.html" target="_blank">
+          <i class="bx bxl-c-plus-plus"></i>
+          <span class="logo_name">ADMIN</span>
+        </a>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <a href="card.html" data-section="dashboard-section" class="active">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="jobposting.html" data-section="joblisting-section">
+            <i class="bx bx-box"></i>
+            <span class="links_name">Job Posting</span>
+          </a>
+        </li>
+        <li>
+          <a href="jobcate.html" data-section="job-categories-section">
+            <i class="bx bx-list-ul"></i>
+            <span class="links_name">Job Applied</span>
+          </a>
+        </li>
+        <li>
+          <a href="applicants.html" data-section="applicants-section">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span class="links_name">Blogs & News</span>
+          </a>
+        </li>
+        <li>
+          <a href="companies.html" data-section="companies-section">
+            <i class="bx bx-coin-stack"></i>
+            <span class="links_name">Settings</span>
+          </a>
+        </li>
+       
+        <li class="log_out">
+          <a href="#">
+            <i class="bx bx-log-out"></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <section class="home-section">
+      <nav>
+        <div class="sidebar-button">
+          <i class="bx bx-menu sidebarBtn"></i>
+          <span class="dashboard">Dashboard</span>
+        </div>
+        <div class="search-box">
+          <input type="text" placeholder="Search..." />
+          <i class="bx bx-search"></i>
+        </div>
+        <div class="profile-details1">
+          <button class="logout-btn1">
+            <i class="bx bx-log-out"></i> Log Out
+          </button>
+        </div>
+      </nav>
+
+      <!-- Iframe container -->
+      <div id="iframe-container">
+        <iframe id="content-iframe" src="card.html" style="width: 100%; height: 600px; border: none;"></iframe>
+      </div>
+
+      <script>
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".sidebarBtn");
+        let iframe = document.getElementById("content-iframe");
+
+        sidebarBtn.onclick = function () {
+          sidebar.classList.toggle("active");
+          if (sidebar.classList.contains("active")) {
+            sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+          } else sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        };
+
+        const links = document.querySelectorAll(".nav-links a[data-section]");
+        
+        links.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            links.forEach((item) => item.classList.remove("active"));
+            link.classList.add("active");
+
+            // Get the URL for the iframe based on the link's data-section attribute
+            const section = link.getAttribute("data-section");
+            let src = "";
+            switch (section) {
+              case "dashboard-section":
+                src = "card.html";
+                break;
+              case "joblisting-section":
+                src = "jobposting.html";
+                break;
+              case "job-categories-section":
+                src = "applicants.html";
+                break;
+              case "applicants-section":
+                src = "news.html";
+                break;
+              case "companies-section":
+                src = "companies.html";
+                break;
+              case "reports-section":
+                src = "reports.html";
+                break;
+              case "settings-section":
+                src = "settings.html";
+                break;
+              default:
+                src = "card.html"; // Default to dashboard view
+                break;
+            }
+
+            // Update the iframe src
+            iframe.src = src;
+          });
+        });
+      </script>
+      
+    </section>
+   
+
+  
+  </body>
+</html>

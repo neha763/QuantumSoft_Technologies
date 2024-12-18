@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Career Registration</title>
+  <style>
+    /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body Styling */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background:  url('img/regist.jpg');
+    background-size: cover; /* Ensure the image covers the entire body */
+    background-position: center; /* Center the image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+    padding: 20px;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  /* Form Container Styling */
+  .container {
+    background: #fff;
+    color: #333;
+    padding: 20px; /* Reduced padding */
+    border-radius: 20px;
+    width: 100%;
+    max-width: 750px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Heading and Subheading */
+  h2 {
+    text-align: center;
+    margin-bottom: 15px; /* Reduced margin */
+    color: #6a11cb;
+    font-size: 28px; /* Slightly smaller font */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  p {
+    text-align: center;
+    margin-bottom: 20px; /* Reduced margin */
+    font-size: 14px; /* Slightly smaller font */
+    color: #666;
+  }
+  
+  /* Form Row and Input Fields */
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px; /* Reduced gap */
+  }
+  
+  .form-field {
+    width: 48%;
+    margin-bottom: 15px; /* Reduced margin */
+  }
+  
+  /* Label Styling */
+  label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Input Fields Styling */
+  input {
+    width: 100%;
+    padding: 12px; /* Reduced padding */
+    margin: 8px 0; /* Reduced margin */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  input:focus {
+    border-color: #6a11cb;
+    outline: none;
+    background-color: #f1f8ff;
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.4);
+  }
+  
+  /* Error Message Styling */
+  .error-message {
+    display: none;
+    font-size: 12px;
+    color: red;
+    margin-top: 5px;
+  }
+  
+  input:invalid + .error-message {
+    display: block;
+  }
+  
+  input:valid {
+    border-color: green;
+    box-shadow: 0 0 5px rgba(0, 128, 0, 0.3);
+  }
+  
+  /* Captcha Styling */
+  .captcha-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .captcha-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #e6e6e6;
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .captcha-box:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .captcha-display {
+    font-weight: 700;
+    font-size: 20px;
+    padding: 5px;
+    background: #f2f2f2;
+    border-radius: 5px;
+    margin-right: 10px;
+    letter-spacing: 2px;
+  }
+  
+  .refresh-captcha {
+    background: #6a11cb;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .refresh-captcha:hover {
+    background: #2575fc;
+    transform: scale(1.1);
+  }
+  
+  /* File Upload Styling */
+  input[type="file"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  input[type="file"]:hover {
+    background-color: #f1f8ff;
+  }
+
+  
+  .signup-btn {
+    background: #6a11cb;
+    color: #fff;
+    padding: 12px 25px; /* Reduced padding */
+    border: none;
+    border-radius: 12px;
+    font-size: 16px; /* Slightly smaller font */
+    cursor: pointer;
+    width: 50%;
+    transition: all 0.3s ease;
+    margin-top: 20px; /* Reduced margin */
+    display: block; /* Make the button a block-level element */
+    margin-left: auto; /* Auto margin on the left */
+    margin-right: auto; /* Auto margin on the right */
+  }
+  
+  
+  .signup-btn:hover {
+    background: #2575fc;
+    box-shadow: 0 0 15px rgba(106, 17, 203, 0.4);
+    transform: scale(1.05);
+  }
+  
+  
+  /* Modal background */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Black w/ opacity */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 100px; /* Adjust this to control the vertical position */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: white;
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Adjust width as needed */
+  text-align: center; /* Center text */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+    }
+  
+    .form-field {
+      width: 100%;
+    }
+  
+    .signup-btn {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 28px;
+    }
+  
+    .signup-btn {
+      padding: 15px 20px;
+    }
+  }
+  
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form id="career-form" class="career-form" action="#" method="POST" enctype="multipart/form-data">
+      <h2>Join Our Team</h2>
+      <p>Build your career with us and take the first step to success.</p>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+          <small class="error-message" id="name-error">Please enter your full name.</small>
+        </div>
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          <small class="error-message" id="email-error">Please enter a valid email.</small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+          <small class="error-message" id="phone-error">Please enter a valid phone number.</small>
+        </div>
+        <div class="form-field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          <small class="error-message" id="password-error">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required>
+          <small class="error-message" id="dob-error">Please select your date of birth.</small>
+        </div>
+        <div class="form-field">
+          <label for="resume">Upload Resume</label>
+          <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+          <small class="error-message" id="resume-error">Please upload your resume.</small>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field captcha-container">
+          <label for="captcha">Captcha</label>
+          <div class="captcha-box">
+            <div id="captcha-display" class="captcha-display"></div>
+            <button type="button" class="refresh-captcha" onclick="generateCaptcha()">&#x21bb;</button>
+          </div>
+          <input type="text" id="captcha" name="captcha" placeholder="Enter captcha" required>
+          <small class="error-message" id="captcha-error">Please enter the correct captcha.</small>
+        </div>
+      </div>
+
+      <button type="submit" class="signup-btn">Register</button>
+    </form>
+  </div>
+
+
+  <!-- Success Modal -->
+<div id="successModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Thank you for applying!</h2>
+    <p>Your application has been successfully submitted.</p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+
+
+  <script>
+    // Generate CAPTCHA function
+    function generateCaptcha() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let captcha = '';
+      for (let i = 0; i < 6; i++) {
+        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      document.getElementById('captcha-display').innerText = captcha;
+    }
+
+    // Validate form fields
+   // Validate form fields
+document.getElementById('career-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form submission
+
+  let isValid = true;
+
+  // Name Validation
+  const name = document.getElementById('name');
+  const nameError = document.getElementById('name-error');
+  if (!name.value.trim()) {
+    nameError.style.display = "block";
+    isValid = false;
+  } else {
+    nameError.style.display = "none";
+  }
+
+  // Email Validation
+  const email = document.getElementById('email');
+  const emailError = document.getElementById('email-error');
+  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if (!email.value.trim() || !emailPattern.test(email.value)) {
+    emailError.style.display = "block";
+    isValid = false;
+  } else {
+    emailError.style.display = "none";
+  }
+
+  // Phone Validation
+  const phone = document.getElementById('phone');
+  const phoneError = document.getElementById('phone-error');
+  const phonePattern = /^[0-9]{10}$/;
+  if (!phone.value.trim() || !phonePattern.test(phone.value)) {
+    phoneError.style.display = "block";
+    isValid = false;
+  } else {
+    phoneError.style.display = "none";
+  }
+
+  // Password Validation
+  const password = document.getElementById('password');
+  const passwordError = document.getElementById('password-error');
+  if (!password.value.trim() || password.value.length < 6) {
+    passwordError.style.display = "block";
+    isValid = false;
+  } else {
+    passwordError.style.display = "none";
+  }
+
+  // Resume Validation
+  const resume = document.getElementById('resume');
+  const resumeError = document.getElementById('resume-error');
+  if (!resume.files.length) {
+    resumeError.style.display = "block";
+    isValid = false;
+  } else {
+    resumeError.style.display = "none";
+  }
+
+  // CAPTCHA Validation
+  const captchaInput = document.getElementById('captcha');
+  const captcha = document.getElementById('captcha-display').innerText;
+  const captchaError = document.getElementById('captcha-error');
+  if (captchaInput.value.trim() !== captcha) {
+    captchaError.style.display = "block";
+    isValid = false;
+  } else {
+    captchaError.style.display = "none";
+  }
+
+  if (isValid) {
+    // Show Success Modal
+    document.getElementById('successModal').style.display = "block";
+  }
+});
+
+
+    // Close Modal
+    function closeModal() {
+      document.getElementById('successModal').style.display = "none";
+    }
+
+    // Display CAPTCHA on page load
+    window.onload = generateCaptcha;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Applicants</title>
+<style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+ 
+        header {
+            background-color: #002D62;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+ 
+        main {
+            padding: 20px;
+            margin: auto;
+            width: 80%;
+        }
+ 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+ 
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+ 
+        th {
+            background-color: #002D62;
+            color: white;
+        }
+ 
+        a {
+            color: #002D62;
+            text-decoration: none;
+        }
+ 
+        a:hover {
+            text-decoration: underline;
+        }
+ 
+        .search-bar {
+            margin-bottom: 20px;
+        }
+ 
+        .search-bar input {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+        }
+ 
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+ 
+        .pagination a {
+            margin: 0 5px;
+            padding: 8px 12px;
+            background-color: #002D62;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+ 
+        .pagination a:hover {
+            background-color: #004a9d;
+        }
+</style>
+</head>
+<body>
+<header>
+<h1>Applicants List</h1>
+</header>
+ 
+    <main>
+<div class="search-bar">
+<input type="text" id="search" placeholder="Search by name, email, or phone">
+</div>
+ 
+        <table id="applicantTable">
+<thead>
+<tr>
+<th>ID</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Email</th>
+<th>Country</th>
+<th>Mobile Number</th>
+<th>Position</th>
+<th>Location</th>
+<th>Resume</th>
+
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+ 
+        <div class="pagination">
+<a href="#">1</a>
+<a href="#">2</a>
+<a href="#">3</a>
+</div>
+</main>
+ 
+    <script>
+        async function fetchAllApplicants() {
+            const apiURL = "http://localhost:8080/api/admin/form/getAllForms"; // API endpoint
+            const tableBody = document.querySelector("#applicantTable tbody");
+ 
+            // Display a loading message while fetching data
+            tableBody.innerHTML = `<tr><td colspan="9">Loading applicants...</td></tr>`;
+ 
+            try {
+                const response = await fetch(apiURL);
+ 
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    tableBody.innerHTML = `<tr><td colspan="9">Error fetching data.</td></tr>`;
+                    return;
+                }
+                const applicants = await response.json();
+ 
+                if (applicants.length > 0) {
+                    tableBody.innerHTML = ""; // Clear table body
+                    applicants.forEach((applicant, index) => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+<td>${index + 1}</td>
+<td>${applicant.firstName || "N/A"}</td>
+<td>${applicant.lastName || "N/A"}</td>
+<td>${applicant.email || "N/A"}</td>
+<td>${applicant.country || "N/A"}</td>
+<td>${applicant.mobileNumber || "N/A"}</td>
+<td>${applicant.position || "N/A"}</td>
+<td>${applicant.location || "N/A"}</td>
+<td><a href="${applicant.cv}" target="_blank">Download CV</a></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="9">No applicants found.</td></tr>`;
+                }
+            } catch (error) {
+                // Handle network or unexpected errors
+                console.error("Error fetching applicants:", error);
+                tableBody.innerHTML = `<tr><td colspan="9">An error occurred: ${error.message}</td></tr>`;
+            }
+        }
+ 
+        // Search functionality
+        document.getElementById("search").addEventListener("input", function () {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#applicantTable tbody tr");
+ 
+            rows.forEach(row => {
+                let match = Array.from(row.cells).some(cell => cell.textContent.toLowerCase().includes(filter));
+                row.style.display = match ? "" : "none";
+            });
+        });
+ 
+        document.addEventListener("DOMContentLoaded", fetchAllApplicants);
+</script>
+</body>
+</html>
+

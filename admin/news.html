@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create News</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        /* background: linear-gradient(135deg, #4facfe, #00f2fe); */
+        background: url('man-looking-stock-market-news-computer.jpg');
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        color: #fff;
+    }
+ 
+    h1 {
+        text-align: center;
+        color: #090909;
+        margin-bottom: 20px;
+        animation: fadeInDown 1s ease-in-out;
+    }
+ 
+    form {
+        background: rgba(94, 239, 255, 0.9);
+        background: transparent;
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        animation: slideIn 1.2s ease-out;
+    }
+ 
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        /* color: #f3f6f5; */
+        background: linear-gradient(to right, #02218f, #0e72e3, #02218f);
+        width: 40%;
+        border-radius: 0px 10px 10px 0px;
+    }
+ 
+    input, textarea, button {
+        width: 90%;
+        padding: 12px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+ 
+    input:focus, textarea:focus {
+        border-color: #4facfe;
+        outline: none;
+        box-shadow: 0 0 8px rgba(79, 172, 254, 0.5);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+ 
+    textarea {
+        resize: none;
+        height: 100px;
+    }
+ 
+    button {
+        background: linear-gradient(to right, #02218f, #0e72e3, #02218f);
+        margin: 10px;
+        align-items: center;
+        color: white;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+ 
+    button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+ 
+    button:active {
+        transform: scale(0.95);
+    }
+ 
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+ 
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+</head>
+<body>
+<div>
+    <h1>Create News</h1>
+    <form id="newsForm">
+        <label for="newsTitle">News Title:</label>
+        <input type="text" id="newsTitle" name="newsTitle" placeholder="Enter the news title" required>
+ 
+        <label for="newsContent">News Content:</label>
+        <textarea id="newsContent" name="newsContent" placeholder="Enter the news content" required></textarea>
+ 
+        <label for="publishedDate">Published Date:</label>
+        <input type="date" id="publishedDate" name="publishedDate" required>
+ 
+        <label for="adminId">Admin ID:</label>
+        <input type="number" id="adminId" name="adminId" placeholder="Enter admin ID" required>
+ 
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<script>
+    document.getElementById('newsForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+ 
+        const newsTitle = document.getElementById('newsTitle').value;
+        const newsContent = document.getElementById('newsContent').value;
+        const publishedDate = document.getElementById('publishedDate').value;
+        const adminId = document.getElementById('adminId').value;
+ 
+        const requestData = {
+            newsTitle,
+            newsContent,
+            publishedDate,
+            admin: {
+                id: parseInt(adminId)
+            }
+        };
+ 
+        try {
+            const response = await fetch('http://localhost:8080/api/News/SaveNews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            });
+ 
+            if (response.ok) {
+                const result = await response.json();
+                alert('News created successfully!');
+                console.log(result);
+            } else {
+                const error = await response.json();
+                alert(`Failed to create news: ${error.message}`);
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
+    });
+</script>
+</body>
+</html>
+ 
+ 

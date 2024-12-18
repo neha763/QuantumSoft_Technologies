@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>Contact Us</title>
+    <style>
+        /* Styling remains the same from the original */
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        function validateForm(event) {
+            const form = document.getElementById('contactForm');
+            let isValid = form.checkValidity(); // HTML5 validation
+
+            // Custom dropdown validation
+            const country = document.getElementById('country');
+            const industry = document.getElementById('industry');
+            let dropdownValid = true;
+
+            if (country.value === "") {
+                country.classList.add('is-invalid');
+                dropdownValid = false;
+            } else {
+                country.classList.remove('is-invalid');
+            }
+
+            if (industry.value === "") {
+                industry.classList.add('is-invalid');
+                dropdownValid = false;
+            } else {
+                industry.classList.remove('is-invalid');
+            }
+
+            // reCAPTCHA validation
+            const recaptchaResponse = document.querySelector('.g-recaptcha-response').value;
+            if (!recaptchaResponse) {
+                document.getElementById('recaptchaError').innerText = "Please complete the reCAPTCHA.";
+                dropdownValid = false;
+            } else {
+                document.getElementById('recaptchaError').innerText = "";
+            }
+
+            // Prevent form submission if any validation fails
+            if (!isValid || !dropdownValid) {
+                event.preventDefault();
+                form.classList.add('was-validated');
+            }
+        }
+    </script>
+    <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('your-background-image.jpg') center/cover no-repeat;
+        backdrop-filter: blur(10px);
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+    #contact .container {
+        max-width: 700px;
+        margin: 30px auto;
+        background-color: rgba(33, 213, 180, 0.8);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(15px);
+    }
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #016fc2;
+    }
+    .error {
+        color: red;
+        font-size: 0.9em;
+    }
+</style>
+</head>
+<body>
+<section id="contact">
+    <div class="container">
+        <h1 class="fw-semibold text-gradient" style="color: #016fc2;">Contact Us</h1>
+        <form id="contactForm" th:action="@{/contactedUser}" th:object="${user}" method="post" novalidate onsubmit="validateForm(event)">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="FirstName">First Name</label>
+                    <input type="text" th:field="*{FirstName}" class="form-control" placeholder="First Name" 
+                           pattern="[A-Za-z]+" title="First name should contain only alphabets" required>
+                    <div class="invalid-feedback">Please enter a valid first name (alphabets only).</div>
+                </div>
+                <div class="col-md-6">
+                    <label for="LastName">Last Name</label>
+                    <input type="text" th:field="*{LastName}" class="form-control" placeholder="Last Name" 
+                           pattern="[A-Za-z]+" title="Last name should contain only alphabets" required>
+                    <div class="invalid-feedback">Please enter a valid last name (alphabets only).</div>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="Country">Country</label>
+                    <select class="form-select" id="country" name="country" required>
+                        <option value="">Select Country</option>
+                        <option value="US">United States</option>
+                        <option value="IN">India</option>
+                        <option value="GB">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a country.</div>
+                </div>
+                <div class="col-md-6">
+                    <label for="Designation">Designation</label>
+                    <input type="text" th:field="*{Designation}" class="form-control" placeholder="Designation" required>
+                    <div class="invalid-feedback">Please enter your designation.</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="Company">Company</label>
+                    <input type="text" th:field="*{Company}" class="form-control" placeholder="Company" required>
+                    <div class="invalid-feedback">Please enter your company name.</div>
+                </div>
+                <div class="col-md-6">
+                    <label for="EmailAddress">Email Address</label>
+                    <input type="email" th:field="*{EmailAddress}" class="form-control" placeholder="Email Address" required>
+                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="Phone">Phone</label>
+                    <input type="tel" th:field="*{Phone}" id="Phone" class="form-control" 
+                           placeholder="Phone" pattern="\d{10,15}" 
+                           title="Please enter a valid phone number (10 to 15 digits)" 
+                           required>
+                    <div class="invalid-feedback">
+                        Please enter a valid phone number with 10 to 15 digits.
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="Industry">Industry</label>
+                    <select class="form-select" id="industry" name="industry" required>
+                        <option value="">Select Industry</option>
+                        <option value="IT">IT</option>
+                        <option value="Textile">Textile</option>
+                        <option value="Banking">Banking</option>
+                        <option value="E-commerce">E-commerce</option>
+                        <option value="Fintech">Fintech</option>
+                    </select>
+                    <div class="invalid-feedback">Please select an industry.</div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="Message">Message</label>
+                <textarea th:field="*{Message}" class="form-control" placeholder="Message" rows="5" required></textarea>
+                <div class="invalid-feedback">Please enter a message.</div>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="dataProcessingConsent" required>
+                <label class="form-check-label" for="dataProcessingConsent">
+                    I consent to the <a href="/data-processing-policy" target="_blank">Data Processing Policy</a>
+                </label>
+                <div class="invalid-feedback">You must consent to the data processing policy.</div>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="termsAndConditions" required>
+                <label class="form-check-label" for="termsAndConditions">
+                    I agree to the <a href="/terms-and-conditions" target="_blank">Terms and Conditions</a>
+                </label>
+                <div class="invalid-feedback">You must agree to the terms and conditions.</div>
+            </div>
+            <div class="mb-3 d-flex justify-content-center">
+                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" style="display: inline-block;"></div>
+            </div>
+            <div id="recaptchaError" class="text-danger text-center" style="margin-top: 10px;"></div>
+            
+            <input type="submit" class="btn btn-primary d-block mx-auto" value="Get In Touch">
+            
+        </form>
+    </div>
+</section>
+</body>
+</html>
