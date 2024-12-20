@@ -257,13 +257,13 @@
         overflow: hidden;
     }
     
-    .about .progress-bar span {
+    /* .about .progress-bar span {
         display: block;
         height: 10px;
         background-color: #ff6200;
         width: 0;
         transition: width 2s ease;
-    }
+    } */
     
     .about .progress-bar.skill-1 span { width: 80%; }
     .about .progress-bar.skill-2 span { width: 70%; }
