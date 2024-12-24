@@ -1,6 +1,7 @@
 const config = {
     development: "http://localhost:8080", // Backend URL for local testing
-    production: "https://your-backend-domain.com" // Backend URL for production
+    production: "http://your-backend-domain.com/api/admin/register"
+
 };
 
 // Automatically choose the correct environment
