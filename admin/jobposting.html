@@ -130,7 +130,7 @@
                 salary: document.getElementById('salary').value
             };
 
-            fetch('http://localhost:8080/api/jobs/job/saveJobs', {
+            fetch('/api/jobs/job/saveJobs', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

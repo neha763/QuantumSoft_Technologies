@@ -4,119 +4,162 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Registration</title>
-    <style>
-        @keyframes gradientBackground {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
- 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-        }
- 
-        .left-section {
-            flex: 1;
-            background: url('img/Register.png') center center / cover no-repeat;
-        }
- 
-        .right-section {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            background-size: 200% 200%;
-            animation: gradientBackground 6s ease infinite;
-        }
- 
-        .registration-form {
-            background: url('img/Registration13.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            width: 350px;
-        }
- 
-        .registration-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
- 
-        .form-group {
-            margin-bottom: 15px;
-        }
- 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
- 
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
- 
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 15px;
-        }
- 
-        .form-group button:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
-    <div class="left-section"></div>
-    <div class="right-section">
-        <div class="registration-form">
-            <h2 style="color: aliceblue;"> Admin Register </h2>
-            <div class="form-group">
-                <label for="name" style="color: aliceblue;">Name</label>
-                <input type="text" id="name" placeholder="Enter your name">
-            </div>
-            <div class="form-group">
-                <label for="mobileNo" style="color: aliceblue;">Mobile</label>
-                <input type="text" id="mobileNo" placeholder="Enter your mobile number">
-            </div>
-            <div class="form-group">
-                <label for="username" style="color: aliceblue;">Username</label>
-                <input type="text" id="username" placeholder="Enter your username">
-            </div>
-            <div class="form-group">
-                <label for="password" style="color: aliceblue;">Password</label>
-                <input type="password" id="password" placeholder="Enter your password">
-            </div>
-            <div class="form-group">
-                <label for="email" style="color: aliceblue;">Email</label>
-                <input type="email" id="email" placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-                <button id="registerButton">Register</button>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Responsive Admin Registration</title>
+        <style>
+            @keyframes gradientBackground {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+   
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+   
+            .container {
+                display: flex;
+                flex: 1;
+            }
+   
+            .left-section {
+                flex: 1;
+                background: url('img/Register.png') center center / cover no-repeat;
+            }
+   
+            .right-section {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: linear-gradient(135deg, #6e8efb, #a777e3);
+                background-size: 200% 200%;
+                animation: gradientBackground 6s ease infinite;
+                padding: 20px;
+            }
+   
+            .registration-form {
+                background: url('img/Registration13.png') center center / cover no-repeat;
+                padding: 30px;
+                border-radius: 12px;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+                width: 100%;
+                max-width: 400px;
+            }
+   
+            .registration-form h2 {
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 24px;
+                color: aliceblue;
+            }
+   
+            .form-group {
+                margin-bottom: 15px;
+            }
+   
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: aliceblue;
+            }
+   
+            .form-group input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+   
+            .form-group button {
+                width: 100%;
+                padding: 10px;
+                background-color: #28a745;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+   
+            .form-group button:hover {
+                background-color: #218838;
+            }
+   
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
+   
+                .left-section {
+                    display: none;
+                }
+            }
+   
+            @media (max-width: 480px) {
+                .registration-form {
+                    padding: 20px;
+                }
+   
+                .registration-form h2 {
+                    font-size: 20px;
+                }
+   
+                .form-group input {
+                    padding: 8px;
+                }
+   
+                .form-group button {
+                    font-size: 14px;
+                    padding: 8px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="left-section"></div>
+            <div class="right-section">
+                <div class="registration-form">
+                    <h2>Admin Register</h2>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobileNo">Mobile</label>
+                        <input type="text" id="mobileNo" placeholder="Enter your mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter your password">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <button id="registerButton">Register</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+   
+       
+   
  
     <script>
         document.getElementById('registerButton').addEventListener('click', async () => {
@@ -132,7 +175,7 @@
             formData.append('adminData', JSON.stringify(adminData));
  
             try {
-                const response = await fetch('http://localhost:8080/api/admin/register', {
+                const response = await fetch('/api/admin/register', {
                     method: 'POST',
                     body: formData
                 });
@@ -155,4 +198,5 @@
 </body>
 </html>
  
+  
  
